@@ -15,12 +15,40 @@ class PostView extends React.Component {
 
   state = {
     post: location.pathname.substr(1),
-    outcomeChoice: false
+    outcomeChoice: false,
+    Finish: false
   }
 
   render () {
     if (this.props.data.loading) {
       return (<div>Loading</div>)
+    }
+    if(this.props.data.user.id == this.props.data.Post.userMaster){
+      return (
+        <div className="well">
+          <h1>Your Event</h1>
+          <h1>Title: {this.props.data.Post.title}</h1>
+          <p>description: {this.props.data.Post.description}</p>
+          <p>point cost: {this.props.data.Post.pointCost}</p>
+          <p>Finish Date: {this.props.data.Post.finish}</p>
+          <img src={this.props.data.Post.imageUrl} />
+          <p>Outcome: {this.props.data.Post.outcomes}</p>
+          <ListVotes postId={this.props.data.Post.id} />
+          <button className="btn btn-danger" onClick={this.handleEnd}>End Bids</button>
+        </div>
+      )
+    }
+    if(this.state.finish === true){
+        <div className="well">
+          <h1>Your Event</h1>
+          <h1>Title: {this.props.data.Post.title}</h1>
+          <p>description: {this.props.data.Post.description}</p>
+          <p>point cost: {this.props.data.Post.pointCost}</p>
+          <p>Finish Date: {this.props.data.Post.finish}</p>
+          <img src={this.props.data.Post.imageUrl} />
+          <p>Outcome: {this.props.data.Post.outcomes}</p>
+          <ListVotes postId={this.props.data.Post.id} />
+        </div>
     }
     return (
       <div className='w-100 flex justify-center'>
@@ -67,6 +95,9 @@ class PostView extends React.Component {
         this.props.router.replace('/')
       })
   }
+  handleEnd = () => {
+    this.setState({Finish: true})
+  }
 }
 const Path = location.pathname.substr(1);
 const createUserChoice = gql`
@@ -86,6 +117,7 @@ const PostQuery = gql`
       finish
       imageUrl
       outcomes
+      userMaster
     }
     user{
       id

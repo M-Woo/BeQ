@@ -17,7 +17,8 @@ class CreatePost extends React.Component {
     title: '',
     pointCost: 5,
     start: '',
-    finish: ''
+    finish: '',
+    userMaster: null
   }
 
   render () {
@@ -75,7 +76,8 @@ class CreatePost extends React.Component {
   }
   handlePost = () => {
     const {description, title, imageUrl, pointCost, start, finish} = this.state
-    this.props.createPost({variables: {description, title, imageUrl, pointCost, start, finish }})
+    const userMaster = this.props.data.user.id
+    this.props.createPost({variables: {description, title, imageUrl, pointCost, start, finish, userMaster }})
       .then(() => {
         this.props.router.replace('/')
       })
@@ -83,8 +85,8 @@ class CreatePost extends React.Component {
 }
 
 const createPost = gql`
-  mutation createPost($description: String!, $title: String!, $imageUrl: String!, $pointCost: Int!, $start: String!, $finish: String!) {
-    createPost(description: $description, title: $title, imageUrl: $imageUrl, pointCost: $pointCost, start: $start, finish: $finish) {
+  mutation createPost($description: String!, $title: String!, $imageUrl: String!, $pointCost: Int!, $start: String!, $finish: String!, $userMaster: String!) {
+    createPost(description: $description, title: $title, imageUrl: $imageUrl, pointCost: $pointCost, start: $start, finish: $finish, userMaster: $userMaster) {
       id
     }
   }
