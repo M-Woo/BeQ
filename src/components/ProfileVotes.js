@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router'
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
-import Post from '../components/Vote'
+import Post from '../components/Post'
 
 
 class ProfileVotes extends React.Component {

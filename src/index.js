@@ -4,6 +4,7 @@ import App from './components/App'
 import CreatePost from './components/CreatePost'
 import CreateUser from './components/CreateUser'
 import Profile from './components/Profile'
+import Leaderboard from './components/Leaderboard'
 import PostView from './components/PostView'
 import { Router, Route, browserHistory } from 'react-router'
 import ApolloClient, { createNetworkInterface } from 'apollo-client'
@@ -36,6 +37,7 @@ ReactDOM.render((
       <Route path='create' component={CreatePost} />
       <Route path='signup' component={CreateUser} />
       <Route path='profile' component={Profile} />
+      <Route path='leaders' component={Leaderboard} />
       <Route path=':id' component={PostView} id=':id' />
     </Router>
   </ApolloProvider>

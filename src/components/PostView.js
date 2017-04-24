@@ -16,7 +16,8 @@ class PostView extends React.Component {
   state = {
     post: location.pathname.substr(1),
     outcomeChoice: false,
-    Finish: false
+    Finish: false,
+    bet: false
   }
 
   render () {
@@ -34,13 +35,13 @@ class PostView extends React.Component {
           <img src={this.props.data.Post.imageUrl} />
           <p>Outcome: {this.props.data.Post.outcomes}</p>
           <ListVotes postId={this.props.data.Post.id} />
-          <button className="btn btn-danger" onClick={this.handleEnd}>End Bids</button>
+          {this.state.Finish === false ? <a className="btn btn-danger" onClick={this.handleEnd} href='/'>End Bids</a> : null}
         </div>
       )
     }
     if(this.state.finish === true){
         <div className="well">
-          <h1>Your Event</h1>
+          <h1 className="alert-danger">Event Finished!</h1>
           <h1>Title: {this.props.data.Post.title}</h1>
           <p>description: {this.props.data.Post.description}</p>
           <p>point cost: {this.props.data.Post.pointCost}</p>
@@ -61,13 +62,14 @@ class PostView extends React.Component {
           <img src={this.props.data.Post.imageUrl} />
           <p>Outcome: {this.props.data.Post.outcomes}</p>
           <ListVotes postId={this.props.data.Post.id} />
-          <button onClick={this.handleYes}>BID YES ${this.props.data.Post.pointCost}</button>
-          <button onClick={this.handleNo}>BID NO ${this.props.data.Post.pointCost}</button>
+          {this.state.bet === false ? <button onClick={this.handleYes}>BID YES ${this.props.data.Post.pointCost}</button> : null}
+          {this.state.bet === false ? <button onClick={this.handleNo}>BID NO ${this.props.data.Post.pointCost}</button> : null}
         </div>
       </div>
     )
   }
   handleYes = () => {
+    this.setState({bet: true})
     const variables = {
       outcomeChoice: !this.state.outcomeChoice,
       post: this.state.post,
@@ -75,13 +77,14 @@ class PostView extends React.Component {
     }
     this.props.createUserChoice({ variables })
       .then((response) => {
-          this.props.router.replace('/')
+        this.props.router.replace('/')
       }).catch((e) => {
         console.error(e)
         this.props.router.replace('/')
       })
   }
   handleNo = () => {
+    this.setState({bet: true})
     const variables = {
       outcomeChoice: this.state.outcomeChoice,
       post: this.state.post,
@@ -89,7 +92,7 @@ class PostView extends React.Component {
     }
     this.props.createUserChoice({ variables })
       .then((response) => {
-          this.props.router.replace('/')
+        this.props.router.replace('/')
       }).catch((e) => {
         console.error(e)
         this.props.router.replace('/')
@@ -97,6 +100,7 @@ class PostView extends React.Component {
   }
   handleEnd = () => {
     this.setState({Finish: true})
+
   }
 }
 const Path = location.pathname.substr(1);

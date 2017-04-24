@@ -52,6 +52,7 @@ class App extends React.Component {
                       <li className="active"><a href="/create">+ NEW EVENT<span className="sr-only">(current)</span></a></li>
                   </ul>
                   <ul className="nav navbar-nav navbar-right">
+                      <li><a href="leaders">LeaderBoard</a></li>
                       <li><a href="/profile">{this.props.data.user.name}</a></li>
                       <li><a onClick={this._logout} href='#'>LOGOUT</a></li>
                   </ul>
@@ -59,7 +60,6 @@ class App extends React.Component {
           </div>
         </nav>
         <ListPage />
-        <Leaderboard />
       </div>
     )
   }
@@ -75,6 +75,7 @@ class App extends React.Component {
               <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul className="nav navbar-nav navbar-right">
                       <li><a><LoginAuth0 clientId={clientId} domain={domain} /></a></li>
+                      <li><a href="leaders">LeaderBoard</a></li>
                   </ul>
               </div>
           </div>
